@@ -62,7 +62,7 @@ def apply_catalog():
 
     input_catalog_path = input("Enter the path to your themed asset catalog: ")
 
-    input(f"Press Enter to overwrite {restore_name} with {input_catalog_path.split('/')[-1]}...")
+    input(f"Press Enter to overwrite {restore_name} with {Path(input_catalog_path).name}...")
 
     restore_file(fp=input_catalog_path, restore_path=restore_path, restore_name=restore_name)
 
@@ -80,7 +80,7 @@ def grab_catalog_path():
                 return
             # print(f"app path: {app_path.as_posix()}")
             # print(catalog_path)
-    
+
 def menu():
     print(f"""
                   SkadzThemer v1.0
