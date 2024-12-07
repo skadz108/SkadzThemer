@@ -1,5 +1,9 @@
 # SkadzThemer
-Catalog icon theming using [SparseRestore](https://github.com/JJTech0130/TrollRestore/tree/main/sparserestore) & [BroccoliAnalytics](https://github.com/jailbreakdotparty/BroccoliAnalytics) 
+Catalog icon theming using [SparseRestore](https://github.com/JJTech0130/TrollRestore/tree/main/sparserestore) & [BroccoliAnalytics](https://github.com/jailbreakdotparty/BroccoliAnalytics)
+
+Supports iOS 17.0-17.7 and iOS 18.0-18.1 beta 4.
+
+This can only theme **User** apps. This is a limitation of the SparseRestore exploit, we cannot fix this.
 
 ## Disclaimer
 I am not responsible if you bootloop! Please follow the usage steps carefully and back up your data before using.
@@ -9,10 +13,11 @@ I am not responsible if you bootloop! Please follow the usage steps carefully an
 2. Run `theme.py` with your device plugged in.
 3. Follow the steps to grab and theme your asset catalogs (shown below)
 4. After moving the themed catalogs to your computer, select option 2
-5. Enter the path to the app's asset catalog (this can be grabbed with option 3)
+5. Enter the name of the app you'd like to theme
 6. Enter the path to the themed catalog on your computer
 7. Hit Enter to apply the themed catalog
-8. Reboot your device and profit!
+8. Repeat steps 4-7 for each app
+9. Reboot your device and profit!
 
 ## Grabbing and theming catalogs
 **Grabbing catalogs**
@@ -32,13 +37,14 @@ This only needs to be done once, afterwards you can theme the existing copies of
 The framework used to modify catalogs only works on Apple systems, so we'll sideload the [CatalogHelper](https://github.com/skadz108/CatalogHelper) app to theme the catalogs on our device.
 
 1. Sideload the latest [CatalogHelper](https://github.com/skadz108/CatalogHelper/releases/latest) .ipa onto your device
-2. Import an asset catalog, and a PNG icon (1024x1024 is recommended, other resolutions may cause issues)
+2. Import an asset catalog, and a PNG icon
 3. Theme the catalog, and send the file to your computer
-4. Continue the regular usage steps
+4. Repeat steps 2-3 for each app's catalog
+5. Continue the regular usage steps
 
 ## Credits
 - [Skadz](https://github.com/skadz108) for writing this script and making [CatalogHelper](https://github.com/skadz108/CatalogHelper).
-- [SparseThemer](https://github.com/haxi0/SparseThemer) for the catalog modification code used in CatalogHelper.
+- [SparseThemer](https://github.com/haxi0/SparseThemer) & [PrivateKits](https://github.com/NSAntoine/PrivateKits/tree/haxi-test) for the catalog modification code used in CatalogHelper.
 - [Duy Tran](https://github.com/khanhduytran0) for discovering the exploit used in BroccoliAnalytics.
-- [JJTech/the TrollRestore authors](https://github.com/JJTech0130/TrollRestore) for SparseRestore and its backup code.
+- [JJTech/the TrollRestore authors](https://github.com/JJTech0130/TrollRestore) for SparseRestore.
 - [the jailbreak.party team](https://github.com/jailbreakdotparty) for assistance and testing.
