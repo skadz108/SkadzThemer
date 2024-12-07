@@ -37,17 +37,27 @@ def get_nice_ios_version_string():
     return os_name
     
 def create_catalog_symlinks():
-    apps = InstallationProxyService(lockdown).get_apps(calculate_sizes=False, application_type="User")
+    apps = InstallationProxyService(lockdown).get_apps(calculate_sizes=False)
     catalog_backup = []
     catalog_backup.append(backup.Directory("", "SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/"))
     for key, value in apps.items():
         if isinstance(value, dict) and "Path" in value:
             app_path = Path(value["Path"])
             catalog_path = Path.joinpath(app_path, 'Assets.car').as_posix()
-            app_name = Path(catalog_path).parent.name.replace('.app', '')
-            catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car.txt", f"{catalog_path}"))
+            if catalog_path.startswith("/private/var/"):
+                app_name = Path(catalog_path).parent.name.replace('.app', '')
+                catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car.txt", f"{catalog_path}"))
     return catalog_backup
-    
+
+def create_symlink_for_app():
+    catalog_backup = []
+    catalog_backup.append(backup.Directory("", "SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/"))
+    catalog_path = grab_catalog_path(verbose=False)
+    app_name = Path(catalog_path).parent.name.replace('.app', '')    
+    catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car.txt", f"{catalog_path}"))
+    back = backup.Backup(files=catalog_backup)
+    perform_restore(backup=back, reboot=False)
+
 def apply_catalog():
     target_path = grab_catalog_path(verbose=False).replace("/private", "")
     if target_path is None:
@@ -69,7 +79,7 @@ def apply_catalog():
     return
 
 def grab_catalog_path(verbose: bool = True):
-    apps = InstallationProxyService(lockdown).get_apps(calculate_sizes=False, application_type="User")
+    apps = InstallationProxyService(lockdown).get_apps(calculate_sizes=False)
     app = input("Enter the name or bundle ID of the app: " if verbose else "Enter the name or bundle ID of the app you'd like to theme: ")
 
     for key, value in apps.items():
@@ -77,9 +87,10 @@ def grab_catalog_path(verbose: bool = True):
             if "CFBundleIdentifier" in value and value["CFBundleIdentifier"] == app:
                 app_path = Path(value["Path"])
                 catalog_path = Path.joinpath(app_path, 'Assets.car').as_posix()
-                if verbose:
-                    print(f"Successfully grabbed path to {app}'s asset catalog!\nCatalog path: {catalog_path}")
-                return catalog_path
+                if catalog_path.startswith("/private/var/"):
+                    if verbose:
+                        print(f"Successfully grabbed path to {app}'s asset catalog!\nCatalog path: {catalog_path}")
+                    return catalog_path
 
             if "Path" in value:
                 app_path = Path(value["Path"])
@@ -87,9 +98,10 @@ def grab_catalog_path(verbose: bool = True):
                 if app_name.lower() == app.lower() or \
                    app_name.lower() == (app + '.app').lower():
                     catalog_path = Path.joinpath(app_path, 'Assets.car').as_posix()
-                    if verbose:
-                        print(f"Successfully grabbed path to {app_name.replace('.app', '')}'s asset catalog!\nCatalog path: {catalog_path}")
-                    return catalog_path
+                    if catalog_path.startswith("/private/var/"):
+                        if verbose:
+                            print(f"Successfully grabbed path to {app_name.replace('.app', '')}'s asset catalog!\nCatalog path: {catalog_path}")
+                        return catalog_path
     
     print(f"No app found with name or bundle ID \"{app}\"")
 
@@ -133,6 +145,8 @@ def menu():
             apply_catalog()
         elif option == 3:
             grab_catalog_path()
+        elif option == 69: # Super secret option to create a symlink to a specific app's asset catalog
+            create_symlink_for_app()
         elif option == 0:
             print("Thanks for using SkadzThemer!")
             exit()
