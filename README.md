@@ -3,10 +3,16 @@ Catalog icon theming using [SparseRestore](https://github.com/JJTech0130/TrollRe
 
 Supports iOS 17.0-17.7 and iOS 18.0-18.1 beta 4.
 
-This can only theme **User** apps. This is a limitation of the SparseRestore exploit, we cannot fix this.
+## Disclaimer & Limitations
+**Disclaimer**
 
-## Disclaimer
 I am not responsible if you bootloop! Please follow the usage steps carefully and back up your data before using.
+
+**Limitations**
+
+- This can only theme User apps and removable system apps (e.g. Tips). System apps cannot be themed, as they aren't in `/var/`.
+- There is no way to forcefully trigger an icon cache refresh (which is needed for custom icons to show up). On iOS 17, it sometimes refreshes after rebooting, but this can be inconsistent. iOS 18 users may be able to make custom icons show by messing with the icon customization feature (e.g. toggling between tinted and dark icons).
+- Grabbing each catalog is fairly tedious
 
 ## Usage
 1. Install `pymobiledevice3` in your Python environment.
