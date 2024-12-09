@@ -3,6 +3,7 @@ from pathlib import Path
 
 from pymobiledevice3.lockdown import create_using_usbmux
 from pymobiledevice3.services.mobilebackup2 import Mobilebackup2Service
+from pymobiledevice3.services.diagnostics import DiagnosticsService
 from pymobiledevice3.exceptions import PyMobileDevice3Exception
 
 from . import backup
@@ -18,6 +19,9 @@ def perform_restore(backup: backup.Backup, reboot: bool = False):
             lockdown = create_using_usbmux()
             with Mobilebackup2Service(lockdown) as mb:
                 mb.restore(backup_dir, system=True, reboot=reboot, copy=False, source=".")
+            if reboot:
+                with DiagnosticsService(lockdown) as diagnostics_service:
+                    diagnostics_service.restart()
     except PyMobileDevice3Exception as e:
         if "Find My" in str(e):
             print("Find My must be disabled in order to use this tool.")
