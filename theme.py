@@ -1,5 +1,6 @@
 import platform
 import sys
+import time
 
 from sparserestore import backup, perform_restore
 from sparserestore.restore import restore_file
@@ -46,7 +47,7 @@ def create_catalog_symlinks():
             catalog_path = Path.joinpath(app_path, 'Assets.car').as_posix()
             if catalog_path.startswith("/private/var/"):
                 app_name = Path(catalog_path).parent.name.replace('.app', '')
-                catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car.txt", f"{catalog_path}"))
+                catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car-{int(time.time())}.txt", f"{catalog_path}"))
     return catalog_backup
 
 def create_symlink_for_app():
@@ -54,7 +55,7 @@ def create_symlink_for_app():
     catalog_backup.append(backup.Directory("", "SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/"))
     catalog_path = grab_catalog_path(verbose=False)
     app_name = Path(catalog_path).parent.name.replace('.app', '')    
-    catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car.txt", f"{catalog_path}"))
+    catalog_backup.append(backup.SymbolicLink("", f"SysContainerDomain-../../../../../../../../var/mobile/Library/Logs/RTCReporting/{app_name}-Assets.car-{int(time.time())}.txt", f"{catalog_path}"))
     back = backup.Backup(files=catalog_backup)
     perform_restore(backup=back, reboot=False)
 
