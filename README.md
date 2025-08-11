@@ -1,3 +1,13 @@
+# UNMAINTAINED
+This was one of my first projects, and while it does work, I can't offer support for it any longer. The current process is very tedious and the code for both the script and helper app need some serious rewriting.
+
+If you're interested in using SkadzThemer, please wait for v2 to release.
+CatalogHelper v2 will introduce fully automatic catalog theming and extraction, and will only require one file in the SkadzThemer script to apply a full icon set.
+
+I cannot offer an ETA on when/if v2 will release, or any technical details, however this repository and project will be updated in the event it does release.
+
+Until then, consider this project discontinued. Original README follows below.
+
 # SkadzThemer
 Catalog icon theming using [SparseRestore](https://github.com/JJTech0130/TrollRestore/tree/main/sparserestore) & [BroccoliAnalytics](https://github.com/jailbreakdotparty/BroccoliAnalytics)
 
@@ -50,7 +60,6 @@ The framework used to modify catalogs only works on Apple systems, so we'll side
 
 ## Credits
 - [Skadz](https://github.com/skadz108) for writing this script and making [CatalogHelper](https://github.com/skadz108/CatalogHelper).
-- [SparseThemer](https://github.com/haxi0/SparseThemer) & [PrivateKits](https://github.com/NSAntoine/PrivateKits/tree/haxi-test) for the catalog modification code used in CatalogHelper.
-- [Duy Tran](https://github.com/khanhduytran0) for discovering the exploit used in BroccoliAnalytics.
+- [SparseThemer](https://github.com/haxi0/SparseThemer) & [PrivateKits](https://github.com/NSAntoine/PrivateKits/tree/haxi-test) for the catalog modification/theming code used in CatalogHelper.
+- [Duy Tran](https://github.com/khanhduytran0) for discovering the exploit used to read the catalogs.
 - [JJTech/the TrollRestore authors](https://github.com/JJTech0130/TrollRestore) for SparseRestore.
-- [the jailbreak.party team](https://github.com/jailbreakdotparty) for assistance and testing.
